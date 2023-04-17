@@ -1,21 +1,21 @@
 import gql from "graphql-tag";
 
 const GET_ROLE = gql`
-  query MyQuery {
-    UserType {
-      ID
-      UserTypeName
-    }
-    Role {
-      ID
-      RoleName
-    }
+query MyQuery {
+  UserType {
+    ID
+    UserTypeName
   }
+  Role {
+    ID
+    RoleName
+  }
+}
+
 `;
 const GET_USERS = gql`
   query MyQuery {
-    User(order_by: {CreatedDateTime: desc}, where: {IsActive: {_eq: true}}) {
-      ID
+    User {
       FirstName
       LastName
       Password
@@ -31,167 +31,75 @@ const GET_USERS = gql`
       ModifiedBy
       ModifiedDateTime
       IsActive
-      Corporate
-      UserType
-      Role
-    }
-    UserType {
-      ID
-      UserTypeName
-    }
-    Role {
-      ID
-      RoleName
     }
   }
 `;
 const UPDATE_USER = gql`
-mutation update_an_article (
-  $ID:uuid!
-  $FirstName : String
-  $LastName : String
-  $Corporate : String
-  $Email : String
-  $Gender : String
-  $ProfilePicture : String
-  $Role : String
-  $UserType : String
-  $Mobile : String
-  $IsActive : Boolean
-  
-){
-  update_User_by_pk (
-    pk_columns: {ID:$ID
- }
-    _set: { 
-      FirstName: $FirstName
-      LastName: $LastName
-      Corporate: $Corporate
-      Email: $Email
-      Gender:$Gender
-      ProfilePicture:$ProfilePicture
-      Role:$Role
-      UserType:$UserType
-      Mobile:$Mobile
-      IsActive:$IsActive
-     }
+  mutation Updateuser(
+    $id: Int!
+    $email: String
+    $firstName: String
+    $lastName: String
+    $gender: String
+    $mobile: numeric
+    $role: String
+    $company: String
+    $usertype: String
+    $profilephoto: String
   ) {
-    ID
-
+    update_user_test_by_pk(
+      pk_columns: { id: $id }
+      _set: {
+        email: $email
+        firstName: $firstName
+        lastName: $lastName
+        gender: $gender
+        mobile: $mobile
+        role: $role
+        company: $company
+        usertype: $usertype
+        profilephoto: $profilephoto
+      }
+    ) {
+      id
+      email
+    }
   }
-}
 `;
-                                                                                                      
 const ADD_USER = gql`
-  mutation   AddUser_an_article(
-   
-    $Corporate: String
-    $Email: String
-    $FirstName: String
-    $LastName: String
-    $Gender: String
-    $IsActive: Boolean
+  mutation AddUser(
+    $email: String
+    $firstName: String
+    $lastName: String
+    $password: String
+    $gender: String
+    $mobile: numeric
+    $role: String
+    $company: String
+    $usertype: String
     $ProfilePicture: String
-    $Role: String
-    $UserType: String
-    $CreatedBy: uuid
-    $ModifiedBy: uuid
-    $RoleID: uuid
-    $UserTypeID: uuid
-    $Mobile: String
-    $Password: String
-    
   ) {
-    insert_User(
+    insert_user_test(
       objects: [
         {
-         
-          Corporate: $Corporate
-          Email: $Email
-          FirstName: $FirstName
-          LastName: $LastName
-          Gender: $Gender
-          IsActive: $IsActive
+          FirstName: $firstName
+          LastName: $lastName
+          Password: $password
+          Gender: $gender
+          UserTypeID: String
+          Mobile: $mobile
+          RoleID: $role
           ProfilePicture: $ProfilePicture
-          Role: $Role
-          UserType: $UserType
-          CreatedBy: $CreatedBy
-          ModifiedBy: $ModifiedBy
-          RoleID: $RoleID
-          UserTypeID: $UserTypeID
-          Mobile: $Mobile
-          Password: $Password
+          CreatedDateTime: String
+          IsActive: true
         }
       ]
     ) {
       returning {
-        ID
-        Email
+        id
+        email
       }
     }
   }
 `;
-
-const GET_USERS_SEARCH_COUNT = gql`
-query ($search: String!, $limit: Int!, $offset: Int!) {
-  User(
-    where: {
-      _or: [{Email: {_like: $search}}, {Corporate: {_like: $search}} , {Mobile: {_like: $search}},{FirstName: {_like: $search}},{LastName: {_like: $search}},{Gender: {_like: $search}},{Role: {_like: $search}},{UserType: {_like: $search}},{Password: {_like: $search}},{ProfilePicture: {_like: $search}}]
-    },
-    limit: $limit,
-    offset: $offset
-  ) {
-ID
-   
-    Email
-    Corporate
-    FirstName
-    Gender
-    Mobile
-    Password
-    ProfilePicture
-    Role
-    RoleID
-    UserType
-    UserTypeID
-    LastName
-  }
-  User_aggregate(where: {IsActive: {_eq: true}}) {
-    aggregate {
-      count
-    }
-  }
-}
-`;
-
-const ENTITY_UER = gql`
-query ($search: String!, $limit: Int!, $offset: Int!) {
-  Entity(
-    where: {
-      _or: [{Description: {_like: $search}}, {Address1: {_like: $search}},{Address2: {_like: $search}},{Address2: {_like: $search}},{Pin: {_like: $search}},{City: {_like: $search}},{State: {_like: $search}},{Country: {_like: $search}}]
-    },
-    limit: $limit,
-    offset: $offset
-  ) {
-ID
-    Description
-    Address1
-    Address2
-    Pin
-    City
-    Country
-    State
-    BannerImage
-    Logo
-  }
-  User_aggregate(where: {IsActive: {_eq: true}}) {
-    aggregate {
-      count
-    }
-  }
-}
-
-`
-
-
-export { GET_USERS, ADD_USER, UPDATE_USER, GET_ROLE,GET_USERS_SEARCH_COUNT,ENTITY_UER };
+export { GET_USERS, ADD_USER, UPDATE_USER, GET_ROLE };

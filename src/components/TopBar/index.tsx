@@ -1,30 +1,21 @@
-import { useState, Fragment } from 'react'
-import Lucide from '../../base-components/Lucide'
-import Breadcrumb from '../../base-components/Breadcrumb'
-import { FormInput } from '../../base-components/Form'
-import { Menu, Popover } from '../../base-components/Headless'
-import fakerData from '../../utils/faker'
-import _ from 'lodash'
-import clsx from 'clsx'
-import { Transition } from '@headlessui/react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { setAuthenticationData } from '../../redux/authenticationSlice'
+import { useState, Fragment } from "react";
+import Lucide from "../../base-components/Lucide";
+import Breadcrumb from "../../base-components/Breadcrumb";
+import { FormInput } from "../../base-components/Form";
+import { Menu, Popover } from "../../base-components/Headless";
+import fakerData from "../../utils/faker";
+import _ from "lodash";
+import clsx from "clsx";
+import { Transition } from "@headlessui/react";
 
 function Main() {
-  const [searchDropdown, setSearchDropdown] = useState(false)
+  const [searchDropdown, setSearchDropdown] = useState(false);
   const showSearchDropdown = () => {
-    setSearchDropdown(true)
-  }
+    setSearchDropdown(true);
+  };
   const hideSearchDropdown = () => {
-    setSearchDropdown(false)
-  }
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const logOutF = () => {
-    dispatch(setAuthenticationData(false))
-    navigate('/')
-  }
+    setSearchDropdown(false);
+  };
 
   return (
     <>
@@ -148,8 +139,8 @@ function Main() {
               <div
                 key={fakerKey}
                 className={clsx([
-                  'cursor-pointer relative flex items-center',
-                  { 'mt-5': fakerKey },
+                  "cursor-pointer relative flex items-center",
+                  { "mt-5": fakerKey },
                 ])}
               >
                 <div className="relative flex-none w-12 h-12 mr-1 image-fit">
@@ -200,14 +191,14 @@ function Main() {
             <Menu.Item className="hover:bg-white/5">
               <Lucide icon="Edit" className="w-4 h-4 mr-2" /> Add Account
             </Menu.Item>
-            {/* <Menu.Item className="hover:bg-white/5">
+            <Menu.Item className="hover:bg-white/5">
               <Lucide icon="Lock" className="w-4 h-4 mr-2" /> Reset Password
-            </Menu.Item> */}
+            </Menu.Item>
             <Menu.Item className="hover:bg-white/5">
               <Lucide icon="HelpCircle" className="w-4 h-4 mr-2" /> Help
             </Menu.Item>
             <Menu.Devider className="bg-white/[0.08]" />
-            <Menu.Item className="hover:bg-white/5" onClick={() => logOutF()}>
+            <Menu.Item className="hover:bg-white/5">
               <Lucide icon="ToggleRight" className="w-4 h-4 mr-2" /> Logout
             </Menu.Item>
           </Menu.Items>
@@ -215,7 +206,7 @@ function Main() {
       </div>
       {/* END: Top Bar */}
     </>
-  )
+  );
 }
 
-export default Main
+export default Main;

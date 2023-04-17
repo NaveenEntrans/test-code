@@ -3,14 +3,14 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
- 
-  apiKey: "AIzaSyDThlrZ4Sv4OXyqT9ZX-aVMHiIfnVtXhZ4",
-  authDomain: "staydesk-1a5ca.firebaseapp.com",
-  projectId: "staydesk-1a5ca",
-  storageBucket: "staydesk-1a5ca.appspot.com",
-  messagingSenderId: "168038571684",
-  appId: "1:168038571684:web:e7041b4f5d776764ce9031",
-  measurementId: "G-Q5DS29GB2V"
+  apiKey: "AIzaSyC3i_3rTugkLkps83CdSz0eC25VchL6bvQ",
+  authDomain: "entrans-selfservice.firebaseapp.com",
+  projectId: "entrans-selfservice",
+  databaseURL: "",
+  storageBucket: "entrans-selfservice.appspot.com",
+  messagingSenderId: "1040776697835",
+  appId: "1:1040776697835:web:00f26b0ed1e3a668142bae",
+  measurementId: "G-R6B5DCL38M",
 };
 
 const app = initializeApp(firebaseConfig);

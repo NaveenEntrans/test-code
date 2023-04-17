@@ -1,26 +1,16 @@
 import { camelCase } from "lodash";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "../../base-components/Button";
 import Dropzone from "../../base-components/Dropzone";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import Lucide from "../../base-components/Lucide";
 import { FormLabel, FormInput, FormSelect } from "../../base-components/Form";
+import { componentprops } from "./userType";
 import ImageUploading from "react-images-uploading";
+import clsx from "clsx";
+
 import ReactS3Client from "react-aws-s3-typescript";
 
-interface componentprops {
-  roleName: Array<string>;
-  Gender: Array<string>;
-  UserType: Array<string>;
-  values: any;
-  errors: any;
-  touched: any;
-  setFieldValue: any;
-  onSubmit: any;
-  buttonName: any;
-  setImageData: any;
-  roleData: any;
-}
 const AddUser = (props: componentprops) => {
   const {
     values,
@@ -29,22 +19,13 @@ const AddUser = (props: componentprops) => {
     touched,
     setFieldValue,
     roleName,
-    Gender,
-    UserType,
+    gender,
+    usertype,
     setImageData,
     roleData,
-    buttonName,
   } = props;
   const [select, setSelect] = useState("");
   const [images, setImages] = useState([]);
-
-  
-  // if(values.UserType == "Platform"){
-  //   useEffect(()=>{
-  //     setFieldValue("Corporate", 'none')
-  //   },[])
-  // }
-  console.log("values====", values);
 
   const [isActive, setIsActive] = useState(false);
   // console.log(isActive);
@@ -74,40 +55,38 @@ const AddUser = (props: componentprops) => {
     } catch (exception) {
       console.log(exception);
     }
-
   };
   return (
     <>
       {/* BEGIN: Page Layout */}
       {/* <div className="p-5 mt-5 intro-y box">User Registration</div> */}
-
       <div className="container">
         <div className="grid grid-cols-12 gap-2 mt-3 intro-x">
           <div className="col-span-6">
             <FormLabel htmlFor="vertical-form-1">First Name</FormLabel>
             <FormInput
               id="vertical-form-1"
-              value={values.FirstName}
-              onChange={(e) => setFieldValue("FirstName", e.target.value)}
-              name="FirstName"
+              value={values.firstName}
+              onChange={(e) => setFieldValue("firstName", e.target.value)}
+              name="firstName"
               type="text"
               placeholder="First Name"
             />
             <p className="text-danger">
-              {touched.FirstName && errors.FirstName}
+              {touched.firstName && errors.firstName}
             </p>
           </div>
           <div className="col-span-6">
             <FormLabel htmlFor="vertical-form-1">Last Name</FormLabel>
             <FormInput
               id="vertical-form-1"
-              value={values.LastName}
-              onChange={(e) => setFieldValue("LastName", e.target.value)}
-              name="LastName"
+              value={values.lastName}
+              onChange={(e) => setFieldValue("lastName", e.target.value)}
+              name="lastName"
               type="text"
               placeholder="Last Name"
             />
-            <p className="text-danger">{touched.LastName && errors.LastName}</p>
+            <p className="text-danger">{touched.lastName && errors.lastName}</p>
           </div>
         </div>
 
@@ -116,147 +95,99 @@ const AddUser = (props: componentprops) => {
             <FormLabel htmlFor="vertical-form-1">Email</FormLabel>
             <FormInput
               id="vertical-form-1"
-              name="Email"
-              value={values.Email}
-              onChange={(e) => setFieldValue("Email", e.target.value)}
+              name="email"
+              value={values.email}
+              onChange={(e) => setFieldValue("email", e.target.value)}
               type="text"
               placeholder="Email"
             />
-            <p className="text-danger">{touched.Email && errors.Email}</p>
+            <p className="text-danger">{touched.email && errors.email}</p>
           </div>
 
           <div className="col-span-6">
             <FormLabel htmlFor="vertical-form-1">Mobile Number</FormLabel>
             <FormInput
               id="vertical-form-1"
-              value={values.Mobile}
-              onChange={(e) => setFieldValue("Mobile", e.target.value)}
-              name="Mobile"
+              value={values.mobile}
+              onChange={(e) => setFieldValue("mobile", e.target.value)}
+              name="mobile"
               type="number"
               placeholder="Phone Number"
-              className="Mob-arrow"
             />
-            <p className="text-danger">{touched.Mobile && errors.Mobile}</p>
+            <p className="text-danger">{touched.mobile && errors.mobile}</p>
           </div>
         </div>
         <div className="grid grid-cols-12 gap-2 mt-3 intro-x">
           <div className="col-span-6">
             <FormLabel htmlFor="vertical-form-1">Gender</FormLabel>
             <FormSelect
-              placeholder=""
-              defaultValue={"sdjkvb"}
-              value={values.Gender}
-              // value={'hai'}
+              value={values.gender}
               onChange={(e) => {
-                setFieldValue("Gender", e.target.value);
+                console.log("e", e);
+                setFieldValue("gender", e.target.value);
               }}
-              name="Gender"
+              name="gender"
               className="w-full"
             >
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Others">Others</option>
+              <option value={""}>Select Gender</option>
+              {gender.map((e, i) => (
+                <option value={e} key={i}>
+                  {e}
+                </option>
+              ))}
             </FormSelect>
-            <p className="text-danger">{touched.Gender && errors.Gender}</p>
+            <p className="text-danger">{touched.gender && errors.gender}</p>
           </div>
           <div className="col-span-6">
             <FormLabel htmlFor="vertical-form-1">User Type</FormLabel>
             <FormSelect
-              value={values.UserType}
-              onChange={(e) => setFieldValue("UserType", e.target.value)}
-              name="UserType
-              "
+              value={values.usertype}
+              onChange={(e) => setFieldValue("usertype", e.target.value)}
+              name="usertype"
               className="w-full"
             >
-              <option value="">Select User Type</option>
-              {roleData?.UserType?.map((e: any, i: any) => (
+              {/* <option value="">Select User Type</option> */}
+              {roleData.UserType.map((e:any, i:any) => (
                 <option value={e.UserTypeName} key={i}>
-                  {e?.UserTypeName}
+                  {e.UserTypeName}
                 </option>
               ))}
             </FormSelect>
-            <p className="text-danger">{touched.UserType && errors.UserType}</p>
+            <p className="text-danger">{touched.usertype && errors.usertype}</p>
           </div>
         </div>
-
-        {/* { values != "Platform" ? <>ljhu</> : <></>} */}
-
         <div className="grid grid-cols-12 gap-2 mt-3 intro-x">
-          
-         
-
+          <div className="col-span-6">
+            <FormLabel htmlFor="vertical-form-1">Corporate </FormLabel>
+            <FormInput
+              id="vertical-form-1"
+              type="text"
+              value={values.company}
+              onChange={(e) => setFieldValue("company", e.target.value)}
+              name="company"
+              placeholder="Company"
+            />
+            <p className="text-danger">{touched.company && errors.company}</p>
+          </div>
           <div className="col-span-6">
             <FormLabel htmlFor="vertical-form-1">Role</FormLabel>
             <FormSelect
-              value={values.Role}
-              onChange={(e) => setFieldValue("Role", e.target.value)}
-              name="Role"
+              value={values.role}
+              onChange={(e) => setFieldValue("role", e.target.value)}
+              name="role"
               className="w-full"
             >
               <option value="">Select Role</option>
-              {roleData?.Role?.map((e: any) => (
+              {roleData.Role.map((e: any) => (
                 <option value={e.RoleName} key={e.ID}>
-                  {e?.RoleName}
+                  {e.RoleName}
                 </option>
               ))}
             </FormSelect>
-            <p className="text-danger">{touched.Role && errors.Role}</p>
+            <p className="text-danger">{touched.role && errors.role}</p>
           </div>
-
-          {values.UserType != "Platform" ? (
-            <div className="col-span-6">
-              <FormLabel htmlFor="vertical-form-1">Corporate </FormLabel>
-              <FormInput
-                id="vertical-form-1"
-                type="text"
-                value={values.Corporate}
-                onChange={(e) => setFieldValue("Corporate", e.target.value)}
-                name="Corporate"
-                placeholder="Corporate"
-              />
-              <p className="text-danger">
-                {touched.Corporate && errors.Corporate}
-              </p>
-            </div>
-          ):( <> 
-          
-          <div className="col-span-6 hidden">
-              <FormLabel htmlFor="vertical-form-1 ">Corporate </FormLabel>
-              <FormInput
-                id="vertical-form-1"
-                type="text"
-                value="none"
-                onChange={(e) => setFieldValue("Corporate", e.target.value)}
-                name="Corporate"
-                placeholder="Corporate"
-              />
-              
-              <p className="text-danger">
-                {touched.Corporate && errors.Corporate}
-              </p>
-            </div>
-
-          </>)}
-
         </div>
         <br />
-        {/* checked or disabled */}
-        <div>
-          <label className="relative inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              value=""
-              className="sr-only peer "
-              checked={values.IsActive}
-              onChange={(e) => setFieldValue("IsActive", !values.IsActive)}
-            ></input>
-            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-            <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-              Active
-            </span>
-          </label>
-        </div>
         <div>
           {/* toggle but */}
 
@@ -318,10 +249,26 @@ const AddUser = (props: componentprops) => {
           style={{ float: "right" }}
           onClick={onSubmit}
           className="mt-5 intro-y"
-          // type="submit"
         >
-          {buttonName}
+          Add User
         </Button>
+      </div>
+
+      {/* checked or disabled */}
+      <div>
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            value=""
+            className="sr-only peer "
+            checked={isActive}
+            onChange={() => setIsActive(!isActive)}
+          ></input>
+          <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+          <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+            Active
+          </span>
+        </label>
       </div>
     </>
   );

@@ -35,10 +35,9 @@ function Main() {
             to="/side-menu/dashboard-overview-1"
             className="flex items-center pt-4 pl-5 intro-x"
           >
-            {/* <span className="hidden ml-3 text-lg text-white xl:block">
+            <span className="hidden ml-3 text-lg text-white xl:block">
               <img alt="Midone Tailwind HTML Admin Template" src={sslogo} />
-            </span> */}
-            {/* logo area */}
+            </span>
           </Link>
           <Devider type="div" className="my-6"></Devider>
           <ul>

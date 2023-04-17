@@ -11,7 +11,7 @@ export const generatePassword = (length: number) => {
   return password
 }
 
-export const Token = () => {
-  const data = localStorage.getItem('jwtToken')
-  return data
+export const userData = () => {
+  const token: any = localStorage.getItem('JWT_TOKEN')
+  const user = jwt(token)
 }

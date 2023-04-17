@@ -23,18 +23,8 @@ const initialState: SideMenuState = {
     // },
     {
       icon: 'Users',
-      pathname: '/Home/user-setup',
+      pathname: '/page-1',
       title: 'User Setup',
-    },
-    {
-      icon: 'Users',
-      pathname: '/Home/corporate',
-      title: 'Corporate',
-    },
-    {
-      icon: 'Users',
-      pathname: '/Home/entity',
-      title: 'Entity',
     },
     // {
     //   icon: 'Users',

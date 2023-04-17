@@ -5,7 +5,6 @@
 import { FormInput, FormCheck } from "../../base-components/Form";
 import Button from "../../base-components/Button";
 import clsx from "clsx";
-import { TailSpin } from "react-loader-spinner";
 // import { useState } from "react";
 // import { loginValidation } from "../../pages/Page2/userSchema";{}
 
@@ -15,11 +14,17 @@ interface IloginUserDataProps {
   touched: any;
   setFieldValue: any;
   onSubmit: any;
-  loading: any;
 }
 
 const LoginComponent = (props: IloginUserDataProps) => {
-  const { values, errors, touched, setFieldValue, onSubmit, loading } = props;
+  const { values, errors, touched, setFieldValue, onSubmit } = props;
+  // const {SetuserLogin,changeHandler} = props
+  // const [userLogin, SetuserLogin] = useState({});
+  // console.log(userLogin);
+
+  // console.log(values);
+  // console.log(errors);
+  
 
   return (
     <>
@@ -42,7 +47,7 @@ const LoginComponent = (props: IloginUserDataProps) => {
                   className="w-6"
                   src={logoUrl}
                 /> */}
-                <span className="ml-3 text-lg text-white"> Stay Desk </span>
+                <span className="ml-3 text-lg text-white"> Self Service </span>
               </a>
               <div className="my-auto">
                 {/* <img
@@ -54,9 +59,9 @@ const LoginComponent = (props: IloginUserDataProps) => {
                   A few more clicks to <br />
                   sign in to your account.
                 </div>
-                {/* <div className="mt-5 text-lg text-white -intro-x text-opacity-70 dark:text-slate-400">
+                <div className="mt-5 text-lg text-white -intro-x text-opacity-70 dark:text-slate-400">
                   Manage all your e-commerce accounts in one place
-                </div> */}
+                </div>
               </div>
             </div>
             {/* END: Login Info */}
@@ -77,23 +82,21 @@ const LoginComponent = (props: IloginUserDataProps) => {
                     placeholder="Email"
                     name="email"
                     value={values.email}
-                    onChange={(e) => setFieldValue("email", e.target.value)}
+                    onChange={(e)=>setFieldValue('email',e.target.value)}
                   />
-                  <p className="text-danger">{touched.email && errors.email}</p>
+                   <p className="text-danger">{touched.email && errors.email}</p>
                   <FormInput
                     type="password"
                     className="block px-4 py-3 mt-4 intro-x login__input min-w-full xl:min-w-[350px]"
                     placeholder="Password"
                     name="password"
                     value={values.password}
-                    onChange={(e) => setFieldValue("password", e.target.value)}
+                    onChange={(e)=>setFieldValue('password',e.target.value)}
                   />
-                  <p className="text-danger">
-                    {touched.password && errors.password}
-                  </p>
+                  <p className="text-danger">{touched.password && errors.password}</p>
                 </div>
                 <div className="flex mt-4 text-xs intro-x text-slate-600 dark:text-slate-500 sm:text-sm">
-                  {/* <div className="flex items-center mr-auto">
+                  <div className="flex items-center mr-auto">
                     <FormCheck.Input
                       id="remember-me"
                       type="checkbox"
@@ -105,8 +108,8 @@ const LoginComponent = (props: IloginUserDataProps) => {
                     >
                       Remember me
                     </label>
-                  </div> */}
-                  <a href="/ForgotPassword">Forgot Password?</a>
+                  </div>
+                  <a href="">Forgot Password?</a>
                 </div>
                 <div className="mt-5 text-center intro-x xl:mt-8 xl:text-left">
                   <Button
@@ -114,29 +117,16 @@ const LoginComponent = (props: IloginUserDataProps) => {
                     className="w-full px-4 py-3 align-top xl:w-32 xl:mr-3"
                     onClick={onSubmit}
                   >
-                    {loading ? (
-                      <TailSpin
-                        height="20"
-                        width="25"
-                        color="#ffff"
-                        ariaLabel="tail-spin-loading"
-                        radius="1"
-                        wrapperStyle={{}}
-                        wrapperClass=""
-                        visible={true}
-                      />
-                    ) : (
-                      "Login"
-                    )}
+                    Login
                   </Button>
-                  {/* <Button
+                  <Button
                     variant="outline-secondary"
                     className="w-full px-4 py-3 mt-3 align-top xl:w-32 xl:mt-0"
                   >
                     Register
-                  </Button> */}
+                  </Button>
                 </div>
-                {/* <div className="mt-10 text-center intro-x xl:mt-24 text-slate-600 dark:text-slate-500 xl:text-left">
+                <div className="mt-10 text-center intro-x xl:mt-24 text-slate-600 dark:text-slate-500 xl:text-left">
                   By signin up, you agree to our{" "}
                   <a className="text-primary dark:text-slate-200" href="">
                     Terms and Conditions
@@ -145,7 +135,7 @@ const LoginComponent = (props: IloginUserDataProps) => {
                   <a className="text-primary dark:text-slate-200" href="">
                     Privacy Policy
                   </a>
-                </div> */}
+                </div>
               </div>
             </div>
             {/* END: Login Form */}
