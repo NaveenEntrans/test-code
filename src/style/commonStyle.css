@@ -1,0 +1,7 @@
+.newColor{
+    background-color: #16B4F3;
+}
+.Mob-arrow input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
