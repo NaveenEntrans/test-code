@@ -1,4 +1,3 @@
-import jwt from 'jwt-decode'
 export const generatePassword = (length: number) => {
   let password = ''
   let characters =
@@ -9,9 +8,4 @@ export const generatePassword = (length: number) => {
   }
 
   return password
-}
-
-export const userData = () => {
-  const token: any = localStorage.getItem('JWT_TOKEN')
-  const user = jwt(token)
 }

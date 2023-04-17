@@ -1,15 +1,9 @@
-import { camelCase } from "lodash";
-import React, { useState } from "react";
-import Button from "../../base-components/Button";
-import Dropzone from "../../base-components/Dropzone";
-import { CheckCircleOutlined } from "@ant-design/icons";
-import Lucide from "../../base-components/Lucide";
-import { FormLabel, FormInput, FormSelect } from "../../base-components/Form";
-import { componentprops } from "./userType";
-import ImageUploading from "react-images-uploading";
-import clsx from "clsx";
-
-import ReactS3Client from "react-aws-s3-typescript";
+import { camelCase } from 'lodash'
+import React, { useState } from 'react'
+import Button from '../../base-components/Button'
+import Dropzone from '../../base-components/Dropzone'
+import { FormLabel, FormInput, FormSelect } from '../../base-components/Form'
+import { componentprops } from './userType'
 
 const AddUser = (props: componentprops) => {
   const {
@@ -21,45 +15,12 @@ const AddUser = (props: componentprops) => {
     roleName,
     gender,
     usertype,
-    setImageData,
-    roleData,
-  } = props;
-  const [select, setSelect] = useState("");
-  const [images, setImages] = useState([]);
-
-  const [isActive, setIsActive] = useState(false);
-  // console.log(isActive);
-
-  // let isActive:any = true;
-
-  const onChange = (imageList: any, addUpdateIndex: any) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList);
-    uploadFile(imageList[0].file);
-  };
-  const s3Config = {
-    bucketName: "self-service-final",
-    region: "ap-south-1",
-    accessKeyId: "AKIATLAFSIFHCO5RKAXM",
-    secretAccessKey: "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",
-  };
-  const uploadFile = async (file: any) => {
-    console.log("file========>", file);
-    const s3 = new ReactS3Client(s3Config);
-    const filename = file.name;
-    try {
-      const res = await s3.uploadFile(file, filename);
-      setImageData(res.location);
-      console.log(res);
-    } catch (exception) {
-      console.log(exception);
-    }
-  };
+  } = props
+  const [select, setSelect] = useState('')
   return (
     <>
       {/* BEGIN: Page Layout */}
-      {/* <div className="p-5 mt-5 intro-y box">User Registration</div> */}
+      <div className="p-5 mt-5 intro-y box">User Registration</div>
       <div className="container">
         <div className="grid grid-cols-12 gap-2 mt-3 intro-x">
           <div className="col-span-6">
@@ -67,13 +28,13 @@ const AddUser = (props: componentprops) => {
             <FormInput
               id="vertical-form-1"
               value={values.firstName}
-              onChange={(e) => setFieldValue("firstName", e.target.value)}
+              onChange={(e) => setFieldValue('firstName', e.target.value)}
               name="firstName"
               type="text"
               placeholder="First Name"
             />
             <p className="text-danger">
-              {touched.firstName && errors.firstName}
+              {/* {touched.firstName && errors.firstName} */}
             </p>
           </div>
           <div className="col-span-6">
@@ -81,7 +42,7 @@ const AddUser = (props: componentprops) => {
             <FormInput
               id="vertical-form-1"
               value={values.lastName}
-              onChange={(e) => setFieldValue("lastName", e.target.value)}
+              onChange={(e) => setFieldValue('lastName', e.target.value)}
               name="lastName"
               type="text"
               placeholder="Last Name"
@@ -97,7 +58,7 @@ const AddUser = (props: componentprops) => {
               id="vertical-form-1"
               name="email"
               value={values.email}
-              onChange={(e) => setFieldValue("email", e.target.value)}
+              onChange={(e) => setFieldValue('email', e.target.value)}
               type="text"
               placeholder="Email"
             />
@@ -109,9 +70,9 @@ const AddUser = (props: componentprops) => {
             <FormInput
               id="vertical-form-1"
               value={values.mobile}
-              onChange={(e) => setFieldValue("mobile", e.target.value)}
+              onChange={(e) => setFieldValue('mobile', e.target.value)}
               name="mobile"
-              type="number"
+              type="text"
               placeholder="Phone Number"
             />
             <p className="text-danger">{touched.mobile && errors.mobile}</p>
@@ -123,13 +84,13 @@ const AddUser = (props: componentprops) => {
             <FormSelect
               value={values.gender}
               onChange={(e) => {
-                console.log("e", e);
-                setFieldValue("gender", e.target.value);
+                console.log('e', e)
+                setFieldValue('gender', e.target.value)
               }}
               name="gender"
               className="w-full"
             >
-              <option value={""}>Select Gender</option>
+              <option value={''}>Select Gender</option>
               {gender.map((e, i) => (
                 <option value={e} key={i}>
                   {e}
@@ -142,14 +103,14 @@ const AddUser = (props: componentprops) => {
             <FormLabel htmlFor="vertical-form-1">User Type</FormLabel>
             <FormSelect
               value={values.usertype}
-              onChange={(e) => setFieldValue("usertype", e.target.value)}
+              onChange={(e) => setFieldValue('usertype', e.target.value)}
               name="usertype"
               className="w-full"
             >
-              {/* <option value="">Select User Type</option> */}
-              {roleData.UserType.map((e:any, i:any) => (
-                <option value={e.UserTypeName} key={i}>
-                  {e.UserTypeName}
+              <option value="">Select User Type</option>
+              {usertype.map((e, i) => (
+                <option value={camelCase(e)} key={i}>
+                  {e}
                 </option>
               ))}
             </FormSelect>
@@ -163,7 +124,7 @@ const AddUser = (props: componentprops) => {
               id="vertical-form-1"
               type="text"
               value={values.company}
-              onChange={(e) => setFieldValue("company", e.target.value)}
+              onChange={(e) => setFieldValue('company', e.target.value)}
               name="company"
               placeholder="Company"
             />
@@ -173,105 +134,55 @@ const AddUser = (props: componentprops) => {
             <FormLabel htmlFor="vertical-form-1">Role</FormLabel>
             <FormSelect
               value={values.role}
-              onChange={(e) => setFieldValue("role", e.target.value)}
+              onChange={(e) => setFieldValue('role', e.target.value)}
               name="role"
               className="w-full"
             >
               <option value="">Select Role</option>
-              {roleData.Role.map((e: any) => (
-                <option value={e.RoleName} key={e.ID}>
-                  {e.RoleName}
+              {roleName.map((e, i) => (
+                <option value={camelCase(e)} key={i}>
+                  {e}
                 </option>
               ))}
             </FormSelect>
             <p className="text-danger">{touched.role && errors.role}</p>
           </div>
         </div>
-        <br />
         <div>
-          {/* toggle but */}
-
-          <FormLabel htmlFor="vertical-form-1">Add Profile Picture</FormLabel>
-          <ImageUploading
-            multiple
-            value={images}
-            onChange={onChange}
-            maxNumber={69}
-            dataURLKey="data_url"
+          <Dropzone
+            getRef={(el: any) => {
+              // console.log('el :>> ', el)
+            }}
+            options={{
+              url: 'https://httpbin.org/post',
+              thumbnailWidth: 150,
+              maxFilesize: 0.5,
+              maxFiles: 1,
+              headers: { 'My-Awesome-Header': 'header value' },
+            }}
+            className="dropzone"
           >
-            {({
-              imageList,
-              onImageUpload,
-              onImageUpdate,
-              onImageRemove,
-              isDragging,
-              dragProps,
-            }) => (
-              // write your building UI
-              <div className="upload__image-wrapper">
-                <div style={{ display: "inline-flex" }}>
-                  <Button
-                    variant="primary"
-                    className=" mb-2 mr-2"
-                    onClick={onImageUpload}
-                    {...dragProps}
-                  >
-                    <Lucide icon="Upload" className="w-4 h-4 mr-2" /> Upload
-                    Profile
-                  </Button>
-                  {imageList.map((image, index) => (
-                    <div style={{ display: "inline-flex", marginTop: "7px" }}>
-                      <p
-                        style={{
-                          color: "#07966B",
-                        }}
-                      >
-                        Uploaded
-                      </p>
-                      <CheckCircleOutlined
-                        key={index}
-                        style={{
-                          color: "#07966B",
-                          marginTop: "2.5px",
-                          marginLeft: "5px",
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-                &nbsp;
-              </div>
-            )}
-          </ImageUploading>
+            <div className="text-lg font-medium">
+              Drop files here or click to upload.
+            </div>
+            <div className="text-gray-600">
+              This is just a demo dropzone. Selected files are
+              <span className="font-medium">not</span> actually uploaded.
+            </div>
+          </Dropzone>
         </div>
         <Button
           variant="primary"
-          style={{ float: "right" }}
+          style={{ float: 'right' }}
           onClick={onSubmit}
           className="mt-5 intro-y"
         >
           Add User
         </Button>
       </div>
-
-      {/* checked or disabled */}
-      <div>
-        <label className="relative inline-flex items-center cursor-pointer">
-          <input
-            type="checkbox"
-            value=""
-            className="sr-only peer "
-            checked={isActive}
-            onChange={() => setIsActive(!isActive)}
-          ></input>
-          <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-          <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Active
-          </span>
-        </label>
-      </div>
+      {/* END: Page Layout */}
     </>
-  );
-};
+  )
+}
 
-export default AddUser;
+export default AddUser

@@ -6,14 +6,14 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { store } from "./redux/store";
 import Router from "./router";
 import "./assets/css/app.css";
-// import { firebase } from "firebase/app";
-// import { FirebaseAuthProvider } from "@react-firebase/auth";
+import firebase from "firebase/app";
+import {FirebaseAuthProvider} from  "@react-firebase/auth";
 const client = new ApolloClient({
-  uri: "https://caring-starfish-41.hasura.app/v1/graphql",
+  uri: "https://useful-alien-99.hasura.app/v1/graphql",
   headers: {
     "content-type": "application/json",
     "x-hasura-admin-secret":
-      "3BzJ68VSGBr6l7e0r50UnR6dv0Z28PIT7V6nfcs4J8V4xMeAvF4LAFVudvOzS5rQ",
+      "GsY1XnKtxlRcXWnUBTW79bwetgA97Zefd9ZGXUNcifw0IukTcXTo5oVEVe3IXbDh",
   },
   cache: new InMemoryCache(),
 });
@@ -28,13 +28,13 @@ const config = {
 };
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
-    {/* <FirebaseAuthProvider firebase={firebase} {...config}> */}
-    <Provider store={store}>
-      <ApolloProvider client={client}>
-        <Router />
-      </ApolloProvider>
-    </Provider>
-    {/* </FirebaseAuthProvider> */}
+    <FirebaseAuthProvider firebase={firebase} {...config}>
+      <Provider store={store}>
+        <ApolloProvider client={client}>
+          <Router />
+        </ApolloProvider>
+      </Provider>
+    </FirebaseAuthProvider>
     <ScrollToTop />
   </BrowserRouter>
 );

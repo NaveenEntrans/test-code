@@ -7,8 +7,6 @@ interface componentprops {
   touched: any
   setFieldValue: any
   onSubmit: any
-  setImageData:any
-  roleData:any
 }
 
 export { componentprops }
