@@ -1,58 +1,57 @@
 // import React from "react";
-import Button from "../../base-components/Button";
-import { FormInline } from "../../base-components/Form";
-import Table from "../../base-components/Table";
-import Lucide from "../../base-components/Lucide";
-import { FormInput, FormSelect } from "../../base-components/Form";
-import { useEffect, useState } from "react";
+import Button from '../../base-components/Button'
+import { FormInline } from '../../base-components/Form'
+import Table from '../../base-components/Table'
+import Lucide from '../../base-components/Lucide'
+import { FormInput, FormSelect } from '../../base-components/Form'
+import { useEffect, useState } from 'react'
 
 const TablePagination = (props: any) => {
-  const { data, heading } = props;
- 
+  const { data, heading } = props
 
-  let previousPage, NextPage, NextPageTwo;
-  const [search, setSearch] = useState("");
-  const [dataPerPage, setDataPerPage] = useState(10);
-  const [SelectedPage, setSelectedPage] = useState(1);
+  let previousPage: any, NextPage: any, NextPageTwo: any
+  const [search, setSearch] = useState('')
+  const [dataPerPage, setDataPerPage] = useState(10)
+  const [SelectedPage, setSelectedPage] = useState(1)
   const [shortStatus, setShortStatus] = useState({
-    heading: "",
+    heading: '',
     sorted: false,
-  });
-  const [displayData, setDisplayData] = useState([]);
-  const [test, setTest] = useState([]);
+  })
+  const [displayData, setDisplayData] = useState([])
+  const [test, setTest] = useState([])
 
   // Page Number calculation
-  let NumOfPage = 1;
+  let NumOfPage = 1
   if (data.length > dataPerPage)
-    NumOfPage = Math.ceil(data.length / dataPerPage);
+    NumOfPage = Math.ceil(data.length / dataPerPage)
 
   // index value calculation
-  const LastIndex = SelectedPage * dataPerPage;
-  const FirstIndex = LastIndex - dataPerPage;
-  let filterData = data.slice(FirstIndex, LastIndex);
+  const LastIndex = SelectedPage * dataPerPage
+  const FirstIndex = LastIndex - dataPerPage
+  let filterData = data.slice(FirstIndex, LastIndex)
   // let filterData = data.slice(FirstIndex, LastIndex);
 
   useEffect(() => {
-    setDisplayData(data.slice(FirstIndex, LastIndex));
-  }, [SelectedPage, dataPerPage]);
+    setDisplayData(data.slice(FirstIndex, LastIndex))
+  }, [SelectedPage, dataPerPage])
 
   //pagination
-  if (SelectedPage !== 1) previousPage = SelectedPage - 1;
-  if (SelectedPage < NumOfPage) NextPage = SelectedPage + 1;
+  if (SelectedPage !== 1) previousPage = SelectedPage - 1
+  if (SelectedPage < NumOfPage) NextPage = SelectedPage + 1
   if (SelectedPage == 1 && SelectedPage + 2 < NumOfPage)
-    NextPageTwo = SelectedPage + 2;
+    NextPageTwo = SelectedPage + 2
 
-  let change = (e) => {
-    setSelectedPage(1);
-    setDataPerPage(e);
-  };
+  let change = (e: any) => {
+    setSelectedPage(1)
+    setDataPerPage(e)
+  }
 
   // let paramtest;
-  let sortFun = (param) => {
+  let sortFun = (param: any) => {
     // setShortStatus({heading: 'test' })
-    console.log(param);
+    console.log(param)
 
-    const sortData = [...displayData].sort((a, b) => {
+    const sortData = [...displayData].sort((a: any, b: any) => {
       // if (shortStatus.sorted) {
       //   return b.firstName
       //     .toLowerCase()
@@ -65,16 +64,16 @@ const TablePagination = (props: any) => {
       if (shortStatus.sorted) {
         return b[`${param}`]
           .toLowerCase()
-          .localeCompare(a[`${param}`].toLowerCase());
+          .localeCompare(a[`${param}`].toLowerCase())
       } else {
         return a[`${param}`]
           .toLowerCase()
-          .localeCompare(b[`${param}`].toLowerCase());
+          .localeCompare(b[`${param}`].toLowerCase())
       }
-    });
+    })
     setShortStatus({ heading: param, sorted: !shortStatus.sorted })
-    setDisplayData([...sortData]);
-  };
+    setDisplayData([...sortData])
+  }
 
   // search fuction
   // let searchFun = (param) => {
@@ -100,7 +99,7 @@ const TablePagination = (props: any) => {
   // };
 
   useEffect(() => {
-    if (search !== "") {
+    if (search !== '') {
       filterData = data.filter(
         (e: any) =>
           e.firstName.toLowerCase().includes(search) ||
@@ -110,17 +109,17 @@ const TablePagination = (props: any) => {
           e.gender.toLowerCase().includes(search) ||
           e.usertype.toLowerCase().includes(search) ||
           e.role.toLowerCase().includes(search) ||
-          e.lastName.toLowerCase().includes(search)
-      );
+          e.lastName.toLowerCase().includes(search),
+      )
     } else {
-      filterData = data.slice(FirstIndex, LastIndex);
+      filterData = data.slice(FirstIndex, LastIndex)
     }
-    setDisplayData(filterData);
-  }, [search]);
+    setDisplayData(filterData)
+  }, [search])
 
-  let icontest = "ArrowUp";
+  let icontest: any = 'ArrowUp'
   if (shortStatus.sorted) {
-    icontest = "ArrowDown";
+    icontest = 'ArrowDown'
   }
 
   return (
@@ -244,7 +243,7 @@ const TablePagination = (props: any) => {
       <div className="overflow-x-auto">
         <Table>
           <Table.Thead>
-            {heading.map((e, i) => (
+            {heading.map((e: any, i: any) => (
               <Table.Th>
                 <Table.Tr
                   className="whitespace-nowrap cursor-pointer flex"
@@ -292,7 +291,7 @@ const TablePagination = (props: any) => {
         <></>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default TablePagination;
+export default TablePagination
