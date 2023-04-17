@@ -1,80 +1,80 @@
 // import React from "react";
-import Button from "../../base-components/Button";
-import { FormInline } from "../../base-components/Form";
-import Table from "../../base-components/Table";
-import Lucide from "../../base-components/Lucide";
-import { FormInput, FormSelect } from "../../base-components/Form";
-import { useEffect, useState } from "react";
-import { Icon } from "lucide-react";
+import Button from '../../base-components/Button'
+import { FormInline } from '../../base-components/Form'
+import Table from '../../base-components/Table'
+import Lucide from '../../base-components/Lucide'
+import { FormInput, FormSelect } from '../../base-components/Form'
+import { useEffect, useState } from 'react'
+import { Icon } from 'lucide-react'
 
 const TablePagination = (props: any) => {
-  const { data, heading, addUSer, editFun } = props;
+  const { data, heading, addUSer, editFun } = props
 
-  let previousPage: any, NextPage: any, NextPageTwo: any;
-  const [search, setSearch] = useState("");
-  const [dataPerPage, setDataPerPage] = useState(10);
-  const [SelectedPage, setSelectedPage] = useState(1);
+  let previousPage: any, NextPage: any, NextPageTwo: any
+  const [search, setSearch] = useState('')
+  const [dataPerPage, setDataPerPage] = useState(10)
+  const [SelectedPage, setSelectedPage] = useState(1)
   const [shortStatus, setShortStatus]: any = useState({
-    heading: "none",
+    heading: 'none',
     sorted: false,
-  });
-  const [displayData, setDisplayData]: any = useState([]);
+  })
+  const [displayData, setDisplayData]: any = useState([])
 
   // setEditData('no')
   // props.setEditData("edit");
   // Page Number calculation
-  let NumOfPage = 1;
+  let NumOfPage = 1
   if (data.length > dataPerPage)
-    NumOfPage = Math.ceil(data.length / dataPerPage);
+    NumOfPage = Math.ceil(data.length / dataPerPage)
 
   // index value calculation
-  const LastIndex = SelectedPage * dataPerPage;
-  const FirstIndex = LastIndex - dataPerPage;
-  let filterData = data.slice(FirstIndex, LastIndex);
+  const LastIndex = SelectedPage * dataPerPage
+  const FirstIndex = LastIndex - dataPerPage
+  let filterData = data.slice(FirstIndex, LastIndex)
   // let filterData = data.slice(FirstIndex, LastIndex);
 
   useEffect(() => {
-    setDisplayData(data.slice(FirstIndex, LastIndex));
+    setDisplayData(data.slice(FirstIndex, LastIndex))
     // setShortStatus({ heading: "no", sorted: false });
-  }, [SelectedPage, dataPerPage]);
+  }, [SelectedPage, dataPerPage])
 
   //pagination
-  if (SelectedPage !== 1) previousPage = SelectedPage - 1;
-  if (SelectedPage < NumOfPage) NextPage = SelectedPage + 1;
+  if (SelectedPage !== 1) previousPage = SelectedPage - 1
+  if (SelectedPage < NumOfPage) NextPage = SelectedPage + 1
   if (SelectedPage == 1 && SelectedPage + 2 < NumOfPage)
-    NextPageTwo = SelectedPage + 2;
+    NextPageTwo = SelectedPage + 2
 
   // let pageChange = (pageNum) => {};
 
   let change = (e: number) => {
-    setSelectedPage(1);
+    setSelectedPage(1)
     // setShortStatus({ heading: "no", sorted: false });
-    setDataPerPage(e);
-  };
+    setDataPerPage(e)
+  }
 
   let sortFun = (param: string | number) => {
     // setShortStatus({heading: 'test' })
-    console.log(param);
+    console.log(param)
 
     const sortData = [...displayData].sort((a, b) => {
       if (shortStatus.sorted) {
         return b[`${param}`]
           .toLowerCase()
-          .localeCompare(a[`${param}`].toLowerCase());
+          .localeCompare(a[`${param}`].toLowerCase())
       } else {
         return a[`${param}`]
           .toLowerCase()
-          .localeCompare(b[`${param}`].toLowerCase());
+          .localeCompare(b[`${param}`].toLowerCase())
       }
-    });
-    setShortStatus({ heading: param, sorted: !shortStatus.sorted });
-    setDisplayData([...sortData]);
-  };
+    })
+    setShortStatus({ heading: param, sorted: !shortStatus.sorted })
+    setDisplayData([...sortData])
+  }
 
   // search fuction
 
   useEffect(() => {
-    if (search !== "") {
+    if (search !== '') {
       filterData = data.filter(
         (e: any) =>
           e.FirstName.toLowerCase().includes(search) ||
@@ -84,17 +84,17 @@ const TablePagination = (props: any) => {
           e.Gender.toLowerCase().includes(search) ||
           // e.usertype.toLowerCase().includes(search) ||
           // e.role.toLowerCase().includes(search) ||
-          e.LastName.toLowerCase().includes(search)
-      );
+          e.LastName.toLowerCase().includes(search),
+      )
     } else {
-      filterData = data.slice(FirstIndex, LastIndex);
+      filterData = data.slice(FirstIndex, LastIndex)
     }
-    setDisplayData(filterData);
-  }, [search]);
+    setDisplayData(filterData)
+  }, [search])
 
-  let arrowIcon: Icon | string = "ArrowDown";
+  let arrowIcon: any = 'ArrowDown'
   if (shortStatus.sorted) {
-    arrowIcon = "ArrowUp";
+    arrowIcon = 'ArrowUp'
   }
 
   return (
@@ -123,7 +123,6 @@ const TablePagination = (props: any) => {
             />
           </div>
           <br />
-         
         </div>
       </div>
 
@@ -179,7 +178,6 @@ const TablePagination = (props: any) => {
           <p className="flex justify-center mt-10 text-xl">No data found</p>
         </p>
       ) : (
-        
         <>
           <div className="flex flex-wrap items-center col-span-12 intro-y sm:flex-row sm:flex-nowrap mt-3 mb-2">
             <div className="w-full sm:w-auto sm:mr-auto flex sm:flex-row sm:flex-nowrap justify-items-center items-center">
@@ -256,7 +254,7 @@ const TablePagination = (props: any) => {
             <FormSelect
               className="w-20 mt-3 !box sm:mt-0 cursor-pointer"
               // onChange={(e) => setDataPerPage(e.target.value) && setSelectedPage(1) }
-              onChange={(e:any) => change(e.target.value)}
+              onChange={(e: any) => change(e.target.value)}
             >
               <option>10</option>
               <option>30</option>
@@ -264,13 +262,10 @@ const TablePagination = (props: any) => {
               <option>100</option>
             </FormSelect>
           </div>
-         
         </>
       )}
-
-      
     </div>
-  );
-};
+  )
+}
 
-export default TablePagination;
+export default TablePagination

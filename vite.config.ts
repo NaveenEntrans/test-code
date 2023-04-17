@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   define: {
-    global: {},
+    'window.global': {},
   },
   optimizeDeps: {
     include: ['tailwind-config'],
